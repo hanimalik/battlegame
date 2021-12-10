@@ -21,24 +21,51 @@ BLUE = (30, 144, 255)
 #to display onto the map.
 class Cactus:
     def __init__(self):
-        self.SPRITE = pygame.transform.scale(pygame.image.load('/Users/hanimalik/Downloads/Cactus/Cactus.png'))
+        self.SPRITE = pygame.transform.scale(pygame.image.load('./textures/cacti/cactus.png'), (75, 75))
         self.X_POS = random.randint(50, 300)
         self.Y_POS = random.randint(50, 450)
 
-class Building:
+class BUILDING:
     def __init__(self):
-        self.SPRITE = pygame.transform.scale(pygame.image.load('/Users/hanimalik/Downloads/Building/village_red.png'))
-        self.X_POS = 6
-        self.Y_POS = 1
+        self.SPRITE = pygame.transform.scale(pygame.image.load('./sprites/building.png'), (300, 300))
+        self.X_POS = 10 
+        self.Y_POS = 0
 
 #Number of Cacti that spawn
-num_of_cacti = 10
+num_of_cacti = 5
 cacti = [Cactus() for x in range (num_of_cacti)]
 
 #We must assign our tiles to the correct texture pack
-SAND = pygame.image.load('./textures/sand.png')
-DIRT = pygame.image.load('./textures/dirt.png')
-WATER = pygame.image.load ('./textures/water.png')
+TEXTURES = {
+    SAND: pygame.image.load('./textures/sand.png'),
+    DIRT: pygame.image.load('./textures/dirt.png'),
+    WATER: pygame.image.load ('./textures/water.png'),
+    CACTUS_0: pygame.image.load('./textures/cacti/cactus.png'),
+}
+#Tiles that will be displayed
+GRID = [
+    [SAND, SAND, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, SAND, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND],
+    [SAND, SAND, SAND, SAND, WATER, WATER, WATER, WATER, WATER, WATER, WATER, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND, SAND]
+]
+
+#Dimensions of the game, set the display, configuration
+TILESIZE = 50
+MAPWIDTH = 20
+MAPHEIGHT = 10
+pygame.init()
+pygame.display.set_caption('The Final Battle')
+
+DISPLAYSURFACE = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
+
+
 
 
 
