@@ -3,16 +3,15 @@ import sys
 
 #Library for all key events
 
-
 #Image path for Han
 img_path = './sprites/han/han_'
-#f_path = 
-#b_path = 
+f_path = img_path + 'f'
+b_path = img_path + 'b'
 r_path = img_path + 'r'
 l_path = img_path + 'l'
 
-#f_images = [f_path+str(f)+'.png' for f in range()]
-#b_images = [b_path+str(b)+'.png' for b in range()]
+f_images = [f_path+str(f)+'.png' for f in range(2)]
+b_images = [b_path+str(b)+'.png' for b in range(2)]
 r_images = [r_path+str(r)+'.png' for r in range(7)]
 l_images = [l_path+str(l)+'.png' for l in range(7)]
 
@@ -36,11 +35,11 @@ class KeyEvents:
         self.wolfie_counter = 0
         self.wolfie_counter_lr = 0
         self.movement = .25
-        self.blasts = 0
+        self.blasts = []
         
     def global_events(self):
         if self.PLAYER.TRANSFORM:
-            self.movement = .5
+            self.movement = .4
         else:
             self.movement = .25
     
@@ -52,69 +51,69 @@ class KeyEvents:
         self.PLAYER.PLAYER_POS[1] += self.movement
         self.PLAYER.DIRECTION = 'd'
 
-        #self.PLAYER.SPRITE_POS = pygame.image.load(f_images[self.counter])
-        #self.counter = (self.counter + 1) % len(f_images)
+        self.PLAYER.SPRITE_POS = pygame.image.load(f_images[self.counter])
+        self.counter = (self.counter + 1) % len(f_images)
 
-        #if self.PLAYER.TRANSFORM:
-            #self.PLAYER.WOLFIE = pygame.image.load(wolfie_f_images[self.wolfie_counter])
-            #self.wolfie_counter = (self.wolfie_counter + 1) % len(wolfie_f_images)
+        if self.PLAYER.TRANSFORM:
+            self.PLAYER.WOLFIE = pygame.image.load(wolfie_f_images[self.wolfie_counter])
+            self.wolfie_counter = (self.wolfie_counter + 1) % len(wolfie_f_images)
     
     def key_up(self):
         self.PLAYER.PLAYER_POS[1] -= self.movement
         self.PLAYER.DIRECTION = 'u'
 
-        #self.PLAYER.SPRITE_POS = pygame.image.load(b_images[self.counter])
-        #self.counter = (self.counter + 1) % len(b_images)
+        self.PLAYER.SPRITE_POS = pygame.image.load(b_images[self.counter])
+        self.counter = (self.counter + 1) % len(b_images)
 
-        #if self.PLAYER.TRANSFORM:
-            #self.PLAYER.WOLFIE = pygame.image.load(wolfie_b_images[self.wolfie_counter])
-            #self.wolfie_counter = (self.wolfie_counter + 1) % len(wolfie_b_images)
+        if self.PLAYER.TRANSFORM:
+            self.PLAYER.WOLFIE = pygame.image.load(wolfie_b_images[self.wolfie_counter])
+            self.wolfie_counter = (self.wolfie_counter + 1) % len(wolfie_b_images)
 
     def key_left(self):
         self.PLAYER.PLAYER_POS[0] -= self.movement
         self.PLAYER.DIRECTION = 'l'
 
-        #self.PLAYER.SPRITE_POS = pygame.image.load(l_images[self.counter])
-        #self.counter = (self.counter + 1) % len(l_images)
+        self.PLAYER.SPRITE_POS = pygame.image.load(l_images[self.counter])
+        self.counter = (self.counter + 1) % len(l_images)
 
-        #if self.PLAYER.TRANSFORM:
-        #self.PLAYER.WOLFIE = pygame.image.load(wolfie_l_images[self.wolfie_counter_lr])
-        #self.wolfie_counter_lr = (self.wolfie_counter_lr + 1) % len(wolf_l_images)
+        if self.PLAYER.TRANSFORM:
+            self.PLAYER.WOLFIE = pygame.image.load(wolfie_l_images[self.wolfie_counter_lr])
+            self.wolfie_counter_lr = (self.wolfie_counter_lr + 1) % len(wolfie_l_images)
 
     def key_right(self):
         self.PLAYER.PLAYER_POS[0] += self.movement
         self.PLAYER.DIRECTION = 'r'
 
-        #self.PLAYER.SPRITE_POS = pygame.image.load(r_images[self.counter])
-        #self.counter = (self.counter + 1) % len(r_images)
+        self.PLAYER.SPRITE_POS = pygame.image.load(r_images[self.counter])
+        self.counter = (self.counter + 1) % len(r_images)
 
-        #if self.PLAYER.TRANSFORM:
-            #self.PLAYER.WOLFIE = pygame.image.load(wolfie_r_images[self.wolfie_counter_lr])
-            #self.wolfie_counter_lr = (self.wolfie_counter_lr + 1) % len(wolfie_r_images)
+        if self.PLAYER.TRANSFORM:
+            self.PLAYER.WOLFIE = pygame.image.load(wolfie_r_images[self.wolfie_counter_lr])
+            self.wolfie_counter_lr = (self.wolfie_counter_lr + 1) % len(wolfie_r_images)
 
     def key_space(self):
-        if self.PLAYER_WEAPON:
+        if self.PLAYER.WEAPON:
             self.PLAYER.PLAYER_INV.remove(self.PLAYER.WEAPON)
             self.PLAYER.WEAPON.PLACED = True
 
             #Drop weapons at current location
             if self.PLAYER.DIRECTION == 'd':
-                self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER_POS[0]
-                self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER_POS[1] - 1
+                    self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER_POS[0]
+                    self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER_POS[1] - 1
             elif self.PLAYER.DIRECTION == 'u':
-                self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER.POS[0]
-                self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER.POS[1] + 1
+                    self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER_POS[0]
+                    self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER_POS[1] + 1
             elif self.PLAYER.DIRECTION == 'r' :
-                self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER.POS[0] - 1
-                self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER.POS[1]
+                    self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER_POS[0] - 1
+                    self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER_POS[1]
             elif self.PLAYER.DIRECTION == 'l':
-                self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER.POS[0] + 1
-                self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER.POS[1]
+                    self.PLAYER.WEAPON.POS[0] = self.PLAYER.PLAYER_POS[0] + 1
+                    self.PLAYER.WEAPON.POS[1] = self.PLAYER.PLAYER_POS[1]
 
         self.PLAYER.WEAPON = False
 
     def key_w(self):
-        self.PLAYER_TRANSFORMING()
+        self.PLAYER.TRANSFORMING()
 
 
 

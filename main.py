@@ -1,4 +1,5 @@
 import pygame, sys
+from pygame.display import toggle_fullscreen
 from pygame.locals import *
 from lib import enemies, heroes, items
 from grid import *
@@ -23,7 +24,6 @@ GAME_WEAPONS = [STAFF]
 BANDIT_LIST = []
 blasts_list = []
 
-
 #Fonts for health, inv,
 INVFONT = pygame.font.SysFont('FreeSansBold.ttf', 20)
 HEALTHFONT = pygame.font.SysFont('FreeSansBold.ttf', 40)
@@ -43,8 +43,8 @@ pygame.time.set_timer(USEREVENT + 3, 1000)
 #BLAST TRAVELS ON PATH
 pygame.time.set_timer(USEREVENT + 4, 100)
 
-
 GAME_OVER = False
+
 #Game Loop
 while not GAME_OVER:
 
@@ -54,12 +54,13 @@ while not GAME_OVER:
         BOSS.VUNERABLE = True
     else:
         BOSS.VUNERABLE = False
+
     for event in pygame.event.get():
 
         keys = pygame.key.get_pressed()
         key_events.global_events()
 
-        if event.type ==QUIT:
+        if event.type == QUIT:
             key_events.quit()
 
         if keys[K_w] and keys[K_t]:
@@ -204,37 +205,37 @@ while not GAME_OVER:
                 bandit.APPEAR = False
                 BANDIT_LIST.remove(bandit)
                 blasts_list.remove(blast)
-            if blast.POS[0] > MAPWIDTH or blast.POS[0] < 0 or blast.POS[1] > MAPHEIGHT or blast.POS[1] < 0:
+        if blast.POS[0] > MAPWIDTH or blast.POS[0] < 0 or blast.POS[1] > MAPHEIGHT or blast.POS[1] < 0:
                 blasts_list.remove(blast)
 
-            DISPLAYSURFACE.blit(blast.IMAGE, (blast.POS[0]*TILESIZE, blast.POS[1]*TILESIZE))
+        DISPLAYSURFACE.blit(blast.IMAGE, (blast.POS[0]*TILESIZE, blast.POS[1]*TILESIZE))
     
     #Render Player inventory
     INVENTORY_POSITION = 250
     for item in PLAYER.PLAYER_INV:
         DISPLAYSURFACE.blit(item.IMAGE, (INVENTORY_POSITION, MAPHEIGHT*TILESIZE+35))
         INVENTORY_POSITION += 10
-        INVENTORY_TEXT = INVFONT.render(item.name, True, WHITE, BLACK)
+        INVENTORY_TEXT = INVFONT.render(item.NAME, True, WHITE, BLACK)
         DISPLAYSURFACE.blit(INVENTORY_TEXT, (INVENTORY_POSITION, MAPHEIGHT*TILESIZE+15))
         INVENTORY_POSITION += 100
 
     #Render Han Health Bar
-
+    PLAYER_HEALTH_BAR_TEXT = HEALTHFONT.render('YOUR HEALTH:', True, GREEN, BLACK)
+    DISPLAYSURFACE.blit(PLAYER_HEALTH_BAR_TEXT, (15, MAPHEIGHT+TILESIZE-500))
+    DISPLAYSURFACE.blit(HEALTHFONT.render(str(PLAYER.HEALTH), True, GREEN, BLACK), (225, MAPHEIGHT+TILESIZE - 500))
 
     #Render Boss Health Bar
-
+    BOSS_HEALTH_BAR_TEXT = HEALTHFONT.render('ENEMY HEALTH:', True, RED, BLACK)
+    DISPLAYSURFACE.blit(BOSS_HEALTH_BAR_TEXT, (650, MAPHEIGHT*TILESIZE-500))
+    DISPLAYSURFACE.blit(HEALTHFONT.render(str(BOSS.HEALTH), True, RED, BLACK), (900, MAPHEIGHT*TILESIZE-500))
 
     #Render Cacti
     for cactus in sorted(cacti, key=lambda t: t.Y_POS):
         DISPLAYSURFACE.blit(cactus.SPRITE, (cactus.X_POS, cactus.Y_POS))
     
-
     #Render Boss and Portal
     DISPLAYSURFACE.blit(pygame.image.load(portal_images[PORTAL.FRAME]), (BOSS.BOSS_POS[0]*TILESIZE, BOSS.BOSS_POS[1]*TILESIZE))
     DISPLAYSURFACE.blit(BOSS.BOSS, (BOSS.BOSS_POS[0]*TILESIZE, BOSS.BOSS_POS[1]*TILESIZE))
-
-    
-
 
     pygame.display.update()
     
